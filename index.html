@@ -2,20 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0b0b0b"/>
   <title>Barbería 202 · A Coruña</title>
   <meta name="description" content="Barbería 202 en A Coruña. Tradición y estilo en cortes de pelo y arreglos de barba. Reserva por teléfono o ven a conocernos."/>
+
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: { 
           fontFamily: { sans: ['Inter'], serif: ['Playfair Display'] },
-          colors: { gold: '#d4af37', dark: '#0b0b0b', dim: '#151515', grayElegant: '#9ca3af' },
+          colors: { gold:'#d4af37', dark:'#0b0b0b', dim:'#151515', grayElegant:'#9ca3af' },
           keyframes: {
             'fade-up': {'0%':{opacity:0,transform:'translateY(16px)'},'100%':{opacity:1,transform:'translateY(0)'}},
             'float': {'0%,100%':{transform:'translateY(-2px)'},'50%':{transform:'translateY(2px)'}}
@@ -24,7 +28,7 @@
             'fade-up':'fade-up .7s ease-out both',
             'float-slow':'float 4s ease-in-out infinite'
           },
-          boxShadow: { soft: '0 10px 30px rgba(0,0,0,.35)' }
+          boxShadow: { soft:'0 10px 30px rgba(0,0,0,.35)' }
         }
       }
     }
@@ -34,15 +38,15 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    /* Animación reveal mínima */
+    /* Reveal mínima */
     .reveal{opacity:0; transform:translateY(16px);}
     .reveal.show{opacity:1; transform:none; transition:all .7s ease-out;}
 
-    /* Paleta de botones consistente */
+    /* Botones coherentes con la paleta */
     :root{ --gold:#d4af37; --dim:#151515; }
     .btn{
       display:inline-flex; align-items:center; gap:.5rem;
-      padding:.75rem 1.25rem; border-radius:1rem; font-weight:600;
+      padding:.75rem 1.1rem; border-radius:1rem; font-weight:600;
       transition:filter .2s ease, transform .05s ease, background .2s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
@@ -52,28 +56,26 @@
     .btn--gold:hover{ filter:brightness(1.1); }
     .btn--dark{ background:var(--dim); color:#fff; border:1px solid rgba(255,255,255,.08); }
     .btn--dark:hover{ background:#1e1e1e; }
+
+    /* Evita saltos de viewport en móvil */
+    .hero-min { min-height: 70svh; } /* svh = safe viewport height */
   </style>
 </head>
 
 <body class="bg-dark text-gray-100">
 
   <!-- Header -->
-  <header class="sticky top-0 z-40 bg-black/70 backdrop-blur border-b border-white/10">
+  <header class="sticky top-0 z-50 bg-black/75 backdrop-blur border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-2 md:py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 group">
-        <!-- Logo circular SIN marco (cubre el círculo) -->
-        <div class="w-14 h-14 md:w-16 md:h-16 rounded-full ring-1 ring-white/10 shadow-soft"
-             style="
-               background-image:url('logo_pestaña.png');
-               background-size: 135%;
-               background-position: center;
-               background-repeat: no-repeat;
-               background-color:#000;">
+      <a href="#" class="flex items-center gap-3">
+        <!-- Logo circular sin marco (cubre el círculo) -->
+        <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full ring-1 ring-white/10 shadow-soft"
+             style="background-image:url('logo_pestaña.png');background-size:135%;background-position:center;background-repeat:no-repeat;background-color:#000;">
         </div>
-        <span class="font-serif font-extrabold text-xl md:text-2xl tracking-wide group-hover:text-gold transition-colors">
-          BARBERÍA 202
-        </span>
+        <span class="font-serif font-extrabold text-lg sm:text-xl md:text-2xl tracking-wide">BARBERÍA 202</span>
       </a>
+
+      <!-- Desktop nav -->
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
         <a href="#nosotros" class="hover:text-gold">Sobre nosotros</a>
         <a href="#servicios" class="hover:text-gold">Servicios</a>
@@ -82,32 +84,51 @@
         <a href="#instagram" class="hover:text-gold">Instagram</a>
         <a href="#contacto" class="hover:text-gold">Contacto</a>
       </nav>
+
+      <!-- Mobile menu button -->
+      <button id="menuBtn" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/15"
+              aria-controls="mobileMenu" aria-expanded="false" aria-label="Abrir menú">
+        <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 bg-black/90 backdrop-blur">
+      <nav class="max-w-6xl mx-auto px-4 py-3 grid gap-3 text-base">
+        <a href="#nosotros" class="py-2 border-b border-white/10 hover:text-gold">Sobre nosotros</a>
+        <a href="#servicios" class="py-2 border-b border-white/10 hover:text-gold">Servicios</a>
+        <a href="#horario" class="py-2 border-b border-white/10 hover:text-gold">Horario</a>
+        <a href="#galeria" class="py-2 border-b border-white/10 hover:text-gold">Galería</a>
+        <a href="#instagram" class="py-2 border-b border-white/10 hover:text-gold">Instagram</a>
+        <a href="#contacto" class="py-2 hover:text-gold">Contacto</a>
+      </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="relative min-h-[65vh] flex items-center justify-center">
+  <section class="relative hero-min flex items-center justify-center">
+    <!-- Fondo: IMG para asegurar cobertura también en móvil -->
     <div class="absolute inset-0 -z-10">
-      <img src="fondo.jpg" alt="Fondo Barbería 202" class="w-full h-full object-cover">
+      <img src="fondo.jpg" alt="Fondo Barbería 202" class="w-full h-full object-cover" loading="eager">
       <div class="absolute inset-0 bg-black/65"></div>
     </div>
 
     <div class="relative text-center px-4">
-      <img src="logo.png" alt="Barbería 202" class="mx-auto w-56 sm:w-64 md:w-72 h-auto drop-shadow animate-float-slow">
-      <p class="mt-6 text-gray-200 text-lg sm:text-xl font-semibold">4.8 ★★★★★ (82 reseñas)</p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
+      <img src="logo.png" alt="Barbería 202" class="mx-auto w-44 sm:w-56 md:w-64 h-auto drop-shadow animate-float-slow" loading="eager">
+      <p class="mt-4 sm:mt-6 text-gray-200 text-base sm:text-lg font-semibold">4.8 ★★★★★ (82 reseñas)</p>
+      <div class="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
         <a href="tel:881250268" class="btn btn--gold">📞 Llamar</a>
         <a href="https://www.google.com/maps?q=Barbería+202,+A+Coruña" target="_blank" class="btn btn--dark">📍 Cómo llegar</a>
       </div>
     </div>
-    <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-gold/90"></div>
   </section>
 
   <!-- Sobre nosotros -->
-  <section id="nosotros" class="py-16 md:py-24 bg-dim border-y border-white/10">
+  <section id="nosotros" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10">
     <div class="max-w-4xl mx-auto px-4 text-center reveal">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold">Sobre nosotros</h2>
-      <p class="mt-4 text-lg text-grayElegant leading-relaxed">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold">Sobre nosotros</h2>
+      <p class="mt-3 sm:mt-4 text-base sm:text-lg text-grayElegant leading-relaxed">
         En <strong class="text-white">Barbería 202</strong> ofrecemos cortes clásicos, degradados modernos y arreglos de barba.
         Calidad, tradición y un trato cercano de confianza.
       </p>
@@ -115,80 +136,80 @@
   </section>
 
   <!-- Servicios -->
-  <section id="servicios" class="py-16 md:py-24 bg-dark">
+  <section id="servicios" class="py-12 sm:py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Servicios y precios</h2>
-      <div class="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
-          <h3 class="font-bold text-xl text-white">Corte clásico</h3>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Servicios y precios</h2>
+      <div class="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-dim/80 rounded-2xl p-5 sm:p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-lg sm:text-xl text-white">Corte clásico</h3>
           <p class="text-grayElegant mt-1">30 min</p>
-          <div class="text-3xl font-extrabold mt-4 text-gold">12 €</div>
+          <div class="text-2xl sm:text-3xl font-extrabold mt-3 sm:mt-4 text-gold">12 €</div>
         </div>
-        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
-          <h3 class="font-bold text-xl text-white">Corte + Barba</h3>
+        <div class="bg-dim/80 rounded-2xl p-5 sm:p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-lg sm:text-xl text-white">Corte + Barba</h3>
           <p class="text-grayElegant mt-1">45 min</p>
-          <div class="text-3xl font-extrabold mt-4 text-gold">15 €</div>
+          <div class="text-2xl sm:text-3xl font-extrabold mt-3 sm:mt-4 text-gold">15 €</div>
         </div>
-        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
-          <h3 class="font-bold text-xl text-white">Arreglo de barba</h3>
+        <div class="bg-dim/80 rounded-2xl p-5 sm:p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-lg sm:text-xl text-white">Arreglo de barba</h3>
           <p class="text-grayElegant mt-1">20 min</p>
-          <div class="text-3xl font-extrabold mt-4 text-gold">8 €</div>
+          <div class="text-2xl sm:text-3xl font-extrabold mt-3 sm:mt-4 text-gold">8 €</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Horario (lunes → domingo) -->
-  <section id="horario" class="py-16 md:py-24 bg-dim border-y border-white/10">
+  <section id="horario" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10">
     <div class="max-w-3xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Horario</h2>
-      <p id="resumen-hoy" class="mt-3 text-center text-grayElegant reveal"></p>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Horario</h2>
+      <p id="resumen-hoy" class="mt-2 sm:mt-3 text-center text-grayElegant reveal"></p>
 
-      <div class="mt-8 rounded-2xl border border-white/10 overflow-hidden reveal">
-        <ul id="lista-horario" class="divide-y divide-white/10"></ul>
+      <div class="mt-6 sm:mt-8 rounded-2xl border border-white/10 overflow-hidden reveal">
+        <ul id="lista-horario" class="divide-y divide-white/10 text-sm sm:text-base"></ul>
       </div>
 
-      <div id="estado-abierto" class="mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium reveal"></div>
+      <div id="estado-abierto" class="mt-5 sm:mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium reveal"></div>
       <p class="mt-3 text-center text-grayElegant reveal">Sin cita previa. Último corte ~30 min antes del cierre.</p>
     </div>
   </section>
 
   <!-- Galería -->
-  <section id="galeria" class="py-16 md:py-24 bg-dark">
+  <section id="galeria" class="py-12 sm:py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Galería</h2>
-      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <img src="galeria.png"  class="rounded-xl border border-white/10 reveal" alt="">
-        <img src="galeria2.png" class="rounded-xl border border-white/10 reveal" alt="">
-        <img src="galeria3.png" class="rounded-xl border border-white/10 reveal" alt="">
-        <img src="galeria4.png" class="rounded-xl border border-white/10 reveal" alt="">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Galería</h2>
+      <div class="mt-6 sm:mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <img src="galeria.png"  class="rounded-xl border border-white/10 reveal w-full h-auto" alt="" loading="lazy">
+        <img src="galeria2.png" class="rounded-xl border border-white/10 reveal w-full h-auto" alt="" loading="lazy">
+        <img src="galeria3.png" class="rounded-xl border border-white/10 reveal w-full h-auto" alt="" loading="lazy">
+        <img src="galeria4.png" class="rounded-xl border border-white/10 reveal w-full h-auto" alt="" loading="lazy">
       </div>
     </div>
   </section>
 
   <!-- Instagram -->
-  <section id="instagram" class="py-16 md:py-24 bg-dim border-y border-white/10 text-center">
-    <h2 class="text-3xl md:text-4xl font-serif font-extrabold reveal">Síguenos en Instagram</h2>
+  <section id="instagram" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10 text-center">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold reveal">Síguenos en Instagram</h2>
     <p class="mt-2 text-grayElegant reveal">Mira nuestros últimos trabajos y novedades.</p>
-    <div class="mt-8 reveal">
+    <div class="mt-6 sm:mt-8 reveal">
       <a href="https://www.instagram.com/barberia202/" target="_blank" class="btn btn--gold">📸 Ver Instagram</a>
     </div>
   </section>
 
   <!-- Contacto -->
-  <section id="contacto" class="py-16 md:py-24 bg-dark">
+  <section id="contacto" class="py-12 sm:py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold reveal">Contacto</h2>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold reveal">Contacto</h2>
       <p class="mt-2 text-grayElegant reveal">📍 Rda. de Outeiro, 202, 15006 A Coruña</p>
       <p class="mt-1 reveal"><strong class="text-white">Tel:</strong> <a href="tel:881250268" class="hover:text-gold">881 25 02 68</a></p>
-      <div class="mt-6 rounded-3xl overflow-hidden border border-white/10 reveal">
-        <iframe src="https://www.google.com/maps?q=Barbería+202,+A+Coruña&output=embed" width="100%" height="360" style="border:0;" allowfullscreen loading="lazy"></iframe>
+      <div class="mt-5 sm:mt-6 rounded-2xl overflow-hidden border border-white/10 reveal">
+        <iframe src="https://www.google.com/maps?q=Barbería+202,+A+Coruña&output=embed" width="100%" height="320" style="border:0;" allowfullscreen loading="lazy"></iframe>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 text-center text-sm text-grayElegant bg-black border-t border-white/10">
+  <footer class="py-8 sm:py-10 text-center text-xs sm:text-sm text-grayElegant bg-black border-t border-white/10">
     <p>&copy; <span id="year"></span> Barbería 202 · Tradición y estilo en A Coruña</p>
   </footer>
 
@@ -196,7 +217,24 @@
     // Año
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Reveal on scroll (sin librerías)
+    // Menu móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('hidden');
+      const expanded = !isOpen;
+      menuBtn.setAttribute('aria-expanded', String(expanded));
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+    // Cierra menú al navegar
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (!mobileMenu.classList.contains('hidden')) menuBtn.click();
+    }));
+
+    // Reveal on scroll
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
     }, {threshold:.15});
@@ -222,7 +260,7 @@
     document.getElementById('resumen-hoy').innerHTML =
       `<strong>Horario: ${todayName}</strong>: ${SCHEDULE[todayName]}`;
 
-    // Lista fija lunes → domingo; se resalta hoy
+    // Lista fija lunes → domingo; resalta hoy
     const ul = document.getElementById('lista-horario');
     orderMonSun.forEach(d => {
       const esHoy = d === todayName;
@@ -232,7 +270,7 @@
       ul.appendChild(li);
     });
 
-    // Abierto ahora / Cerrado ahora
+    // Abierto ahora / Cerrado
     function parseRanges(text){
       if(!text || text.toLowerCase()==='cerrado') return [];
       return text.split(',').map(t=>t.trim()).map(r=>{
@@ -251,7 +289,7 @@
     const estado = document.getElementById('estado-abierto');
     const abierto = isOpenNow(todayName);
     estado.textContent = abierto ? '✅ Abierto ahora' : '⛔ Cerrado ahora';
-    estado.className = `mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium ${abierto ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
+    estado.className = `mt-5 sm:mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium ${abierto ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
   </script>
 </body>
 </html>
