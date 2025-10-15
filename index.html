@@ -106,23 +106,29 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="relative hero-min flex items-center justify-center">
-    <!-- Fondo: IMG para asegurar cobertura también en móvil -->
-    <div class="absolute inset-0 -z-10">
-      <img src="fondo.jpg" alt="Fondo Barbería 202" class="w-full h-full object-cover" loading="eager">
-      <div class="absolute inset-0 bg-black/65"></div>
-    </div>
+<!-- Hero -->
+<section
+  class="relative hero-min min-h-[70vh] flex items-center justify-center bg-center bg-cover"
+  style="background-image:url('fondo.jpg');"
+>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/65"></div>
 
-    <div class="relative text-center px-4">
-      <img src="logo.png" alt="Barbería 202" class="mx-auto w-44 sm:w-56 md:w-64 h-auto drop-shadow animate-float-slow" loading="eager">
-      <p class="mt-4 sm:mt-6 text-gray-200 text-base sm:text-lg font-semibold">4.8 ★★★★★ (82 reseñas)</p>
-      <div class="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
-        <a href="tel:881250268" class="btn btn--gold">📞 Llamar</a>
-        <a href="https://www.google.com/maps?q=Barbería+202,+A+Coruña" target="_blank" class="btn btn--dark">📍 Cómo llegar</a>
-      </div>
+  <!-- Contenido -->
+  <div class="relative text-center px-4">
+    <img src="logo.png" alt="Barbería 202"
+         class="mx-auto w-44 sm:w-56 md:w-64 h-auto drop-shadow animate-float-slow" loading="eager">
+    <p class="mt-4 sm:mt-6 text-gray-200 text-base sm:text-lg font-semibold">4.8 ★★★★★ (82 reseñas)</p>
+    <div class="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+      <a href="tel:881250268" class="btn btn--gold">📞 Llamar</a>
+      <a href="https://www.google.com/maps?q=Barbería+202,+A+Coruña" target="_blank" class="btn btn--dark">📍 Cómo llegar</a>
     </div>
-  </section>
+  </div>
+
+  <!-- Separador -->
+  <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-gold/90"></div>
+</section>
+
 
   <!-- Sobre nosotros -->
   <section id="nosotros" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10">
