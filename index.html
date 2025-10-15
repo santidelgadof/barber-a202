@@ -78,8 +78,8 @@
       <!-- Desktop nav -->
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
         <a href="#nosotros" class="hover:text-gold">Sobre nosotros</a>
-        <a href="#servicios" class="hover:text-gold">Servicios</a>
         <a href="#horario" class="hover:text-gold">Horario</a>
+        <a href="#servicios" class="hover:text-gold">Servicios</a>
         <a href="#galeria" class="hover:text-gold">Galería</a>
         <a href="#instagram" class="hover:text-gold">Instagram</a>
         <a href="#contacto" class="hover:text-gold">Contacto</a>
@@ -97,8 +97,8 @@
     <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 bg-black/90 backdrop-blur">
       <nav class="max-w-6xl mx-auto px-4 py-3 grid gap-3 text-base">
         <a href="#nosotros" class="py-2 border-b border-white/10 hover:text-gold">Sobre nosotros</a>
+        <a href="#horario" class="py-2 border-b border-white/10 hover:text-gold">Horario</a>       
         <a href="#servicios" class="py-2 border-b border-white/10 hover:text-gold">Servicios</a>
-        <a href="#horario" class="py-2 border-b border-white/10 hover:text-gold">Horario</a>
         <a href="#galeria" class="py-2 border-b border-white/10 hover:text-gold">Galería</a>
         <a href="#instagram" class="py-2 border-b border-white/10 hover:text-gold">Instagram</a>
         <a href="#contacto" class="py-2 hover:text-gold">Contacto</a>
@@ -135,6 +135,19 @@
     </div>
   </section>
 
+  
+  <!-- Horario (lunes → domingo) -->
+  <section id="horario" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Horario</h2>
+      <p id="resumen-hoy" class="mt-2 sm:mt-3 text-center text-grayElegant reveal"></p>
+
+      <div class="mt-6 sm:mt-8 rounded-2xl border border-white/10 overflow-hidden reveal">
+        <ul id="lista-horario" class="divide-y divide-white/10 text-sm sm:text-base"></ul>
+      </div>
+    </div>
+  </section>
+
   <!-- Servicios -->
   <section id="servicios" class="py-12 sm:py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4">
@@ -156,21 +169,6 @@
           <div class="text-2xl sm:text-3xl font-extrabold mt-3 sm:mt-4 text-gold">8 €</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Horario (lunes → domingo) -->
-  <section id="horario" class="py-12 sm:py-16 md:py-24 bg-dim border-y border-white/10">
-    <div class="max-w-3xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Horario</h2>
-      <p id="resumen-hoy" class="mt-2 sm:mt-3 text-center text-grayElegant reveal"></p>
-
-      <div class="mt-6 sm:mt-8 rounded-2xl border border-white/10 overflow-hidden reveal">
-        <ul id="lista-horario" class="divide-y divide-white/10 text-sm sm:text-base"></ul>
-      </div>
-
-      <div id="estado-abierto" class="mt-5 sm:mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium reveal"></div>
-      <p class="mt-3 text-center text-grayElegant reveal">Sin cita previa. Último corte ~30 min antes del cierre.</p>
     </div>
   </section>
 
