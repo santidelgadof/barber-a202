@@ -8,30 +8,76 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      theme: { extend: { 
-        fontFamily: { sans: ['Inter'], serif: ['Playfair Display'] },
-        colors: { gold: '#d4af37', dark: '#111111', grayElegant: '#444444' }
-      }}
+      theme: {
+        extend: { 
+          fontFamily: { sans: ['Inter'], serif: ['Playfair Display'] },
+          colors: { gold: '#d4af37', dark: '#0b0b0b', dim: '#151515', grayElegant: '#9ca3af' },
+          keyframes: {
+            'fade-up': {'0%':{opacity:0,transform:'translateY(16px)'},'100%':{opacity:1,transform:'translateY(0)'}},
+            'float': {'0%,100%':{transform:'translateY(-2px)'},'50%':{transform:'translateY(2px)'}}
+          },
+          animation: {
+            'fade-up':'fade-up .7s ease-out both',
+            'float-slow':'float 4s ease-in-out infinite'
+          },
+          boxShadow: { soft: '0 10px 30px rgba(0,0,0,.35)' }
+        }
+      }
     }
   </script>
-  <link rel="icon" href="logo.png"/>
-  <style> html { scroll-behavior: smooth; } </style>
+
+  <link rel="icon" href="logo_pestaña.png"/>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    /* Animación reveal mínima */
+    .reveal{opacity:0; transform:translateY(16px);}
+    .reveal.show{opacity:1; transform:none; transition:all .7s ease-out;}
+
+    /* Paleta de botones consistente */
+    :root{ --gold:#d4af37; --dim:#151515; }
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.75rem 1.25rem; border-radius:1rem; font-weight:600;
+      transition:filter .2s ease, transform .05s ease, background .2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+    .btn--gold{ background:var(--gold); color:#000; }
+    .btn--gold:hover{ filter:brightness(1.1); }
+    .btn--dark{ background:var(--dim); color:#fff; border:1px solid rgba(255,255,255,.08); }
+    .btn--dark:hover{ background:#1e1e1e; }
+  </style>
 </head>
-<body class="bg-white text-dark">
+
+<body class="bg-dark text-gray-100">
 
   <!-- Header -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3">
-        <img src="logo.png" alt="Logo Barbería 202" class="w-12 h-12 rounded-full bg-gray-200"/>
-        <span class="font-serif font-extrabold text-lg">BARBERÍA 202</span>
+  <header class="sticky top-0 z-40 bg-black/70 backdrop-blur border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-2 md:py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <!-- Logo circular SIN marco (cubre el círculo) -->
+        <div class="w-14 h-14 md:w-16 md:h-16 rounded-full ring-1 ring-white/10 shadow-soft"
+             style="
+               background-image:url('logo_pestaña.png');
+               background-size: 135%;
+               background-position: center;
+               background-repeat: no-repeat;
+               background-color:#000;">
+        </div>
+        <span class="font-serif font-extrabold text-xl md:text-2xl tracking-wide group-hover:text-gold transition-colors">
+          BARBERÍA 202
+        </span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
         <a href="#nosotros" class="hover:text-gold">Sobre nosotros</a>
         <a href="#servicios" class="hover:text-gold">Servicios</a>
+        <a href="#horario" class="hover:text-gold">Horario</a>
         <a href="#galeria" class="hover:text-gold">Galería</a>
         <a href="#instagram" class="hover:text-gold">Instagram</a>
         <a href="#contacto" class="hover:text-gold">Contacto</a>
@@ -39,49 +85,52 @@
     </div>
   </header>
 
-  <!-- Portada -->
-  <section class="relative bg-[#09080a] flex items-center justify-center py-24">
-    <div class="text-center">
-      <img src="logo.png" alt="Barbería 202" class="mx-auto w-64 h-auto"/>
-      <div class="mt-6">
-        <p class="text-white text-xl font-semibold">4.8 ★★★★★ (82 reseñas)</p>
-      </div>
-      <div class="mt-6 flex flex-wrap justify-center gap-4">
-        <a href="tel:881250268" class="px-6 py-3 rounded-2xl bg-yellow-500 text-black font-semibold hover:bg-yellow-400">📞 Llamar</a>
-        <a href="https://www.google.com/maps?q=Barbería+202,+A+Coruña" target="_blank" class="px-6 py-3 rounded-2xl bg-gray-700 text-white font-semibold hover:bg-gray-600">📍 Cómo llegar</a>
+  <!-- Hero -->
+  <section class="relative min-h-[65vh] flex items-center justify-center">
+    <div class="absolute inset-0 -z-10">
+      <img src="fondo.jpg" alt="Fondo Barbería 202" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-black/65"></div>
+    </div>
+
+    <div class="relative text-center px-4">
+      <img src="logo.png" alt="Barbería 202" class="mx-auto w-56 sm:w-64 md:w-72 h-auto drop-shadow animate-float-slow">
+      <p class="mt-6 text-gray-200 text-lg sm:text-xl font-semibold">4.8 ★★★★★ (82 reseñas)</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="tel:881250268" class="btn btn--gold">📞 Llamar</a>
+        <a href="https://www.google.com/maps?q=Barbería+202,+A+Coruña" target="_blank" class="btn btn--dark">📍 Cómo llegar</a>
       </div>
     </div>
+    <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-gold/90"></div>
   </section>
-  
-  
+
   <!-- Sobre nosotros -->
-  <section id="nosotros" class="py-16 md:py-24 bg-white border-b border-gray-200">
-    <div class="max-w-4xl mx-auto px-4 text-center">
+  <section id="nosotros" class="py-16 md:py-24 bg-dim border-y border-white/10">
+    <div class="max-w-4xl mx-auto px-4 text-center reveal">
       <h2 class="text-3xl md:text-4xl font-serif font-extrabold">Sobre nosotros</h2>
-      <p class="mt-4 text-lg text-grayElegant">
-        En <strong>Barbería 202</strong> llevamos años ofreciendo cortes clásicos, degradados modernos y arreglos de barba en A Coruña.  
-        Nuestra filosofía es simple: calidad, tradición y un trato cercano de confianza.
+      <p class="mt-4 text-lg text-grayElegant leading-relaxed">
+        En <strong class="text-white">Barbería 202</strong> ofrecemos cortes clásicos, degradados modernos y arreglos de barba.
+        Calidad, tradición y un trato cercano de confianza.
       </p>
     </div>
   </section>
 
   <!-- Servicios -->
-  <section id="servicios" class="py-16 md:py-24 bg-gray-50 border-b border-gray-200">
+  <section id="servicios" class="py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center">Servicios y precios</h2>
-      <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl p-6 shadow text-center">
-          <h3 class="font-bold text-xl">Corte clásico</h3>
+      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Servicios y precios</h2>
+      <div class="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-xl text-white">Corte clásico</h3>
           <p class="text-grayElegant mt-1">30 min</p>
           <div class="text-3xl font-extrabold mt-4 text-gold">12 €</div>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow text-center">
-          <h3 class="font-bold text-xl">Corte + Barba</h3>
+        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-xl text-white">Corte + Barba</h3>
           <p class="text-grayElegant mt-1">45 min</p>
           <div class="text-3xl font-extrabold mt-4 text-gold">15 €</div>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow text-center">
-          <h3 class="font-bold text-xl">Arreglo de barba</h3>
+        <div class="bg-dim/80 rounded-2xl p-6 border border-white/10 hover:-translate-y-1 hover:border-gold/50 transition reveal">
+          <h3 class="font-bold text-xl text-white">Arreglo de barba</h3>
           <p class="text-grayElegant mt-1">20 min</p>
           <div class="text-3xl font-extrabold mt-4 text-gold">8 €</div>
         </div>
@@ -89,48 +138,120 @@
     </div>
   </section>
 
+  <!-- Horario (lunes → domingo) -->
+  <section id="horario" class="py-16 md:py-24 bg-dim border-y border-white/10">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Horario</h2>
+      <p id="resumen-hoy" class="mt-3 text-center text-grayElegant reveal"></p>
+
+      <div class="mt-8 rounded-2xl border border-white/10 overflow-hidden reveal">
+        <ul id="lista-horario" class="divide-y divide-white/10"></ul>
+      </div>
+
+      <div id="estado-abierto" class="mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium reveal"></div>
+      <p class="mt-3 text-center text-grayElegant reveal">Sin cita previa. Último corte ~30 min antes del cierre.</p>
+    </div>
+  </section>
+
   <!-- Galería -->
-  <section id="galeria" class="py-16 md:py-24 bg-white border-b border-gray-200">
+  <section id="galeria" class="py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center">Galería</h2>
-      <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <img src="galeria.png" class="rounded-xl shadow-md"/>
-        <img src="galeria2.png" class="rounded-xl shadow-md"/>
-        <img src="galeria3.png" class="rounded-xl shadow-md"/>
-        <img src="galeria4.png" class="rounded-xl shadow-md"/>
+      <h2 class="text-3xl md:text-4xl font-serif font-extrabold text-center reveal">Galería</h2>
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img src="galeria.png"  class="rounded-xl border border-white/10 reveal" alt="">
+        <img src="galeria2.png" class="rounded-xl border border-white/10 reveal" alt="">
+        <img src="galeria3.png" class="rounded-xl border border-white/10 reveal" alt="">
+        <img src="galeria4.png" class="rounded-xl border border-white/10 reveal" alt="">
       </div>
     </div>
   </section>
 
   <!-- Instagram -->
-  <section id="instagram" class="py-16 md:py-24 bg-gray-50 border-b border-gray-200 text-center">
-    <h2 class="text-3xl md:text-4xl font-serif font-extrabold">Síguenos en Instagram</h2>
-    <p class="mt-2 text-grayElegant">Mira nuestros últimos trabajos y novedades.</p>
-    <div class="mt-8">
-      <!-- Demo carrusel (RSS widget si quieres añadirlo como antes) -->
-      <a href="https://www.instagram.com/barberia202/" target="_blank" class="inline-block px-6 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold hover:opacity-90">
-        📸 Ver Instagram
-      </a>
+  <section id="instagram" class="py-16 md:py-24 bg-dim border-y border-white/10 text-center">
+    <h2 class="text-3xl md:text-4xl font-serif font-extrabold reveal">Síguenos en Instagram</h2>
+    <p class="mt-2 text-grayElegant reveal">Mira nuestros últimos trabajos y novedades.</p>
+    <div class="mt-8 reveal">
+      <a href="https://www.instagram.com/barberia202/" target="_blank" class="btn btn--gold">📸 Ver Instagram</a>
     </div>
   </section>
 
   <!-- Contacto -->
-  <section id="contacto" class="py-16 md:py-24 bg-white">
+  <section id="contacto" class="py-16 md:py-24 bg-dark">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <h2 class="text-3xl md:text-4xl font-serif font-extrabold">Contacto</h2>
-      <p class="mt-2 text-grayElegant">📍 Rda. de Outeiro, 202, 15006 A Coruña</p>
-      <p class="mt-1"><strong>Tel:</strong> <a href="tel:881250268">881 25 02 68</a></p>
-      <div class="mt-6 rounded-3xl overflow-hidden border border-gray-200">
+      <h2 class="text-3xl md:text-4xl font-serif font-extrabold reveal">Contacto</h2>
+      <p class="mt-2 text-grayElegant reveal">📍 Rda. de Outeiro, 202, 15006 A Coruña</p>
+      <p class="mt-1 reveal"><strong class="text-white">Tel:</strong> <a href="tel:881250268" class="hover:text-gold">881 25 02 68</a></p>
+      <div class="mt-6 rounded-3xl overflow-hidden border border-white/10 reveal">
         <iframe src="https://www.google.com/maps?q=Barbería+202,+A+Coruña&output=embed" width="100%" height="360" style="border:0;" allowfullscreen loading="lazy"></iframe>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 text-center text-sm text-grayElegant bg-gray-50 border-t border-gray-200">
+  <footer class="py-10 text-center text-sm text-grayElegant bg-black border-t border-white/10">
     <p>&copy; <span id="year"></span> Barbería 202 · Tradición y estilo en A Coruña</p>
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll (sin librerías)
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // --- HORARIO (lunes → domingo) ---
+    const SCHEDULE = {
+      'lunes':   '9:30–14:00, 16:30–20:00',
+      'martes':  '9:30–14:00, 16:30–20:00',
+      'miércoles':'9:30–14:00, 16:30–20:00',
+      'jueves':  '9:30–14:00, 16:30–20:00',
+      'viernes': '9:30–14:00, 16:30–20:00',
+      'sábado':  '9:30–15:00',
+      'domingo': 'Cerrado'
+    };
+    const orderMonSun = ['lunes','martes','miércoles','jueves','viernes','sábado','domingo'];
+    const diasGetDay = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+
+    const todayIdx = new Date().getDay();
+    const todayName = diasGetDay[todayIdx];
+
+    // Resumen del día actual
+    document.getElementById('resumen-hoy').innerHTML =
+      `<strong>Horario: ${todayName}</strong>: ${SCHEDULE[todayName]}`;
+
+    // Lista fija lunes → domingo; se resalta hoy
+    const ul = document.getElementById('lista-horario');
+    orderMonSun.forEach(d => {
+      const esHoy = d === todayName;
+      const li = document.createElement('li');
+      li.className = `flex items-center justify-between px-4 py-3 ${esHoy ? 'bg-black/30 font-semibold' : ''}`;
+      li.innerHTML = `<span class="capitalize">${d}</span><span class="text-gray-300">${SCHEDULE[d]}</span>`;
+      ul.appendChild(li);
+    });
+
+    // Abierto ahora / Cerrado ahora
+    function parseRanges(text){
+      if(!text || text.toLowerCase()==='cerrado') return [];
+      return text.split(',').map(t=>t.trim()).map(r=>{
+        const [ini,fin] = r.split('–').map(s=>s.trim());
+        return [ini,fin];
+      });
+    }
+    const toMin = s => { const [h,m]=s.split(':').map(Number); return h*60+(m||0); };
+    function isOpenNow(dayName, now=new Date()){
+      const ranges = parseRanges(SCHEDULE[dayName]);
+      if(!ranges.length) return false;
+      const mins = now.getHours()*60 + now.getMinutes();
+      return ranges.some(([a,b]) => mins >= toMin(a) && mins < toMin(b));
+    }
+
+    const estado = document.getElementById('estado-abierto');
+    const abierto = isOpenNow(todayName);
+    estado.textContent = abierto ? '✅ Abierto ahora' : '⛔ Cerrado ahora';
+    estado.className = `mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium ${abierto ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
+  </script>
 </body>
 </html>
