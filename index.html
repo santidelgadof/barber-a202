@@ -286,7 +286,6 @@
 
     const estado = document.getElementById('estado-abierto');
     const abierto = isOpenNow(todayName);
-    estado.textContent = abierto ? '✅ Abierto ahora' : '⛔ Cerrado ahora';
     estado.className = `mt-5 sm:mt-6 w-fit mx-auto px-4 py-2 rounded-xl font-medium ${abierto ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
   </script>
 </body>
